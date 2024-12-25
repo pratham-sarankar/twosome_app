@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "764787246226",
+    "project_id": "twosome-243d5",
+    "storage_bucket": "twosome-243d5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764787246226:android:9d85d9368b16c185e2d24b",
+        "android_client_info": {
+          "package_name": "ai.app.twosome_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5z59Sy2Q5HF0_D9zuO8mCjTolzoP9nxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
