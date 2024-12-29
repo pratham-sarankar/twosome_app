@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,10 +14,14 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final primaryColor = Theme.of(context).colorScheme.primary;
+    final theme = Theme.of(context);
+    final primaryColor = theme.colorScheme.primary;
+    final scaffoldBgColor = theme.scaffoldBackgroundColor;
     return Scaffold(
       body: Stack(
         children: [
@@ -31,16 +36,14 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           Positioned.fill(
               child: Container(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withAlpha(00),
-                    Colors.black.withAlpha(200),
-                  ],
-                ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withAlpha(00),
+                  Colors.black.withAlpha(200),
+                ],
               ),
             ),
           )),
@@ -80,71 +83,195 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
                 const Spacer(),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(
-                      vertical: size.height * 0.015,
-                      horizontal: size.width * 0.14,
-                    ),
-                    elevation: 5,
-                    shadowColor: Colors.black87,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    )
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset('assets/illustrations/google_logo.svg'),
-                      const SizedBox(width: 16),
-                      Text("Continue with Google"),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 30),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Text.rich(
-                    TextSpan(
-                      text: "By signing up, you agree with our\n",
-                      style: TextStyle(
-                          color: Colors.grey.shade100.withAlpha(255),
-                          fontSize: 14,
-                          shadows: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 5,
-                              offset: const Offset(0, 0),
-                            ),
-                          ]),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
                       children: [
-                        TextSpan(
-                          text: "Terms of Service",
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
                           style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            color: scaffoldBgColor,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Email",
+                            hintStyle: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color: scaffoldBgColor,
+                            ),
+                            prefixIcon: Icon(
+                              CupertinoIcons.mail,
+                              color: scaffoldBgColor,
+                            ),
+                            prefixIconConstraints: BoxConstraints(minWidth: 60),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                            fillColor: scaffoldBgColor.withAlpha(45),
+                            filled: true,
                           ),
                         ),
-                        TextSpan(
-                          text: " and ",
-                        ),
-                        TextSpan(
-                          text: "Privacy Policy",
+                        const SizedBox(height: 15),
+                        TextFormField(
+                          keyboardType: TextInputType.visiblePassword,
                           style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            color: scaffoldBgColor,
+                          ),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            hintStyle: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                color: scaffoldBgColor),
+                            prefixIcon: Icon(
+                              CupertinoIcons.lock,
+                              color: scaffoldBgColor,
+                            ),
+                            prefixIconConstraints: BoxConstraints(minWidth: 60),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                            fillColor: scaffoldBgColor.withAlpha(45),
+                            filled: true,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: Text(
+                                "Forgot Password?",
+                                style: GoogleFonts.poppins(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.016,
+                              horizontal: size.width * 0.14,
+                            ),
+                            elevation: 5,
+                            shadowColor: Colors.black87,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            minimumSize: Size(size.width, 0),
+                            backgroundColor: primaryColor,
+                            foregroundColor: scaffoldBgColor,
+                            textStyle: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                            ),
+                          ),
+                          child: Text("Login"),
+                        ),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.015,
+                              horizontal: size.width * 0.14,
+                            ),
+                            elevation: 5,
+                            shadowColor: Colors.black87,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            minimumSize: Size(size.width, 0),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SvgPicture.asset(Assets.googleLogo),
+                              const SizedBox(width: 16),
+                              Text("Continue with Google"),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: Text.rich(
+                            TextSpan(
+                              text: "By signing up, you agree with our\n",
+                              style: TextStyle(
+                                  color: Colors.grey.shade100.withAlpha(255),
+                                  fontSize: 14,
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 5,
+                                      offset: const Offset(0, 0),
+                                    ),
+                                  ]),
+                              children: [
+                                TextSpan(
+                                  text: "Terms of Service",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.white,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: " and ",
+                                ),
+                                TextSpan(
+                                  text: "Privacy Policy",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ],
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                )
+                ),
               ],
             ),
           ),
