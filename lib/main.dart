@@ -1,13 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:twosome_app/config/routes/router.dart';
 import 'package:twosome_app/config/themes/theme.dart';
 import 'package:twosome_app/core/di/init_services.dart';
+import 'package:twosome_app/core/logging/app_bloc_observer.dart';
 import 'package:twosome_app/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Bloc.observer = AppBlocObserver();
   initServices();
   // Initialize firebase app with default options for the current platform.
   await Firebase.initializeApp(
@@ -28,7 +31,7 @@ class TwoSomeApp extends StatelessWidget {
       darkTheme: theme.dark(),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      routerConfig: router,
+      routerConfig: AppRouter.router,
     );
   }
 }

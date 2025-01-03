@@ -130,4 +130,15 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     return true;
   }
+
+  @override
+  Future<Either<Failure, void>> forgotPassword(String email) async {
+    try {
+      return Right(await firebaseAuth.sendPasswordResetEmail(email: email));
+    } on auth.FirebaseAuthException catch (e) {
+      return Left(AuthFailure(e.message ?? 'Authentication error'));
+    } catch (e) {
+      return Left(e is Failure ? e : ServerFailure(e.toString()));
+    }
+  }
 }

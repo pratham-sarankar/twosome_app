@@ -32,3 +32,12 @@ class SignInWithGoogleEvent extends AuthEvent {}
 class SignOutEvent extends AuthEvent {}
 
 class GetCurrentUserEvent extends AuthEvent {}
+
+class ForgotPasswordEvent extends AuthEvent {
+  final String email;
+
+  const ForgotPasswordEvent({required this.email});
+
+  @override
+  List<Object?> get props => [email];
+}
