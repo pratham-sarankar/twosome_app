@@ -44,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
           return Stack(
             children: [
               // Login Form
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+              ListView(
+                reverse: true,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),

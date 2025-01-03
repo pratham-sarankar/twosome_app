@@ -12,7 +12,20 @@
           "package_name": "ai.app.twosome_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "764787246226-pt8cbq1mq5nohficaje0ent51grppb2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ai.app.twosome_app",
+            "certificate_hash": "2a4168c07d912a51d799ff492c1e27ed73be668b"
+          }
+        },
+        {
+          "client_id": "764787246226-apq7esgdaibkg2ob1puvv6tuiau4ivbp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA5z59Sy2Q5HF0_D9zuO8mCjTolzoP9nxU"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "764787246226-apq7esgdaibkg2ob1puvv6tuiau4ivbp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "764787246226-findskl6b1pmpr2ifuhtqncpjp8nm9tb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ai.app.twosomeApp"
+              }
+            }
+          ]
         }
       }
     }

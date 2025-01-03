@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AuthScaffold extends StatelessWidget {
   const AuthScaffold({super.key, required this.body});
+
   final Widget body;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -39,33 +41,39 @@ class AuthScaffold extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Center(child: SizedBox(height: size.height * 0.02)),
-                Text(
-                  "2SOME",
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      BoxShadow(
-                        color: Colors.white54,
-                        blurRadius: 10,
-                        offset: const Offset(0, 0),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+                  child: Column(
+                    children: [
+                      Text(
+                        "2SOME",
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          shadows: [
+                            BoxShadow(
+                              color: Colors.white54,
+                              blurRadius: 10,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-                Text(
-                  "Share the real you with your AI.",
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    shadows: [
-                      BoxShadow(
-                        color: Colors.white,
-                        blurRadius: 1,
-                        offset: const Offset(0, 0),
+                      Text(
+                        "Share the real you with your AI.",
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          shadows: [
+                            BoxShadow(
+                              color: Colors.white,
+                              blurRadius: 1,
+                              offset: const Offset(0, 0),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
