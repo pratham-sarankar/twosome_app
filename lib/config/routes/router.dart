@@ -7,6 +7,7 @@ import 'package:twosome_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:twosome_app/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:twosome_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:twosome_app/features/auth/presentation/screens/signup_screen.dart';
+import 'package:twosome_app/features/contacts/presentation/screens/contacts_screen.dart';
 import 'package:twosome_app/features/home/presentation/screens/home_screen.dart';
 import 'package:twosome_app/features/profile/presentation/screens/profile_screen.dart';
 import 'package:twosome_app/features/spaces/presentation/screens/discover_screen.dart';
@@ -47,8 +48,17 @@ class AppRouter {
             builder: (context, state) => DiscoverScreen(),
           ),
           GoRoute(
+            path: Routes.contacts,
+            builder: (context, state) => ContactsScreen(),
+          ),
+          GoRoute(
             path: Routes.profile,
-            builder: (context, state) => ProfileScreen(),
+            builder: (context, state) => MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => sl<AuthBloc>()),
+              ],
+              child: ProfileScreen(),
+            ),
           ),
         ],
       ),
@@ -57,7 +67,7 @@ class AppRouter {
     // Redirection Logic
     redirect: (context, state) {
       final isAuthenticated = FirebaseAuth.instance.currentUser != null;
-      final isLoggingIn = state.uri.path == Routes.login;
+      final isLoggingIn = state.uri.path.startsWith(Routes.auth);
 
       // If unauthenticated and not on login/signup, redirect to login
       if (!isAuthenticated && !isLoggingIn) {
@@ -66,13 +76,17 @@ class AppRouter {
 
       // If authenticated and trying to go to login, redirect to /home/discover
       if (isAuthenticated && isLoggingIn) {
-        return Routes
-            .discover; // Redirect authenticated users to /home/discover
+        return Routes.discover;
       }
 
-      // If going to /home (direct access), redirect to /home/spaces
+      // If going to Routes.home, redirect to Routes.discover
       if (state.uri.path == Routes.home) {
-        return Routes.discover; // Redirect /home to /home/spaces
+        return Routes.discover;
+      }
+
+      // If going to Routes.auth, redirect to Routes.login
+      if (state.uri.path == Routes.auth) {
+        return Routes.login;
       }
 
       return null; // No redirection needed
