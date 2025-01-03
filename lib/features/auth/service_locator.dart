@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twosome_app/core/di/init_services.dart';
 import 'package:twosome_app/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:twosome_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:twosome_app/features/auth/domain/use_cases/delete_user.dart';
 import 'package:twosome_app/features/auth/domain/use_cases/forgot_password.dart';
 import 'package:twosome_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'domain/use_cases/get_current_user.dart';
@@ -28,6 +29,7 @@ void setupAuth() {
   sl.registerLazySingleton(() => SignOut(sl()));
   sl.registerLazySingleton(() => GetCurrentUser(sl()));
   sl.registerLazySingleton(() => ForgotPassword(sl()));
+  sl.registerLazySingleton(() => DeleteUser(sl()));
 
   sl.registerFactory(
     () => AuthBloc(
@@ -37,6 +39,7 @@ void setupAuth() {
       signOut: sl(),
       getCurrentUser: sl(),
       forgotPassword: sl(),
+      deleteUser: sl(),
     ),
   );
 }

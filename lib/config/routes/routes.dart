@@ -10,4 +10,7 @@ class Routes {
   static const String discover = '$home/discover';
   static const String contacts = '$home/contacts';
   static const String profile = '$home/profile';
+
+  // Profile Routes
+  static const String account = '$profile/account';
 }

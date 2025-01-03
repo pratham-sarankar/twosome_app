@@ -1,6 +1,7 @@
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twosome_app/core/usecases/usecase.dart';
+import 'package:twosome_app/features/auth/domain/use_cases/delete_user.dart';
 import 'package:twosome_app/features/auth/domain/use_cases/forgot_password.dart';
 import '../../domain/use_cases/sign_in_with_email.dart';
 import '../../domain/use_cases/sign_up_with_email.dart';
@@ -17,6 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignOut signOut;
   final GetCurrentUser getCurrentUser;
   final ForgotPassword forgotPassword;
+  final DeleteUser deleteUser;
 
   AuthBloc({
     required this.signInWithEmail,
@@ -25,6 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.signOut,
     required this.getCurrentUser,
     required this.forgotPassword,
+    required this.deleteUser,
   }) : super(AuthInitial()) {
     on<SignInWithEmailEvent>(_onSignInWithEmail, transformer: droppable());
     on<SignUpWithEmailEvent>(_onSignUpWithEmail, transformer: droppable());
@@ -32,6 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignOutEvent>(_onSignOut, transformer: droppable());
     on<GetCurrentUserEvent>(_onGetCurrentUser, transformer: droppable());
     on<ForgotPasswordEvent>(_onForgotPassword, transformer: droppable());
+    on<DeleteUserEvent>(_onDeleteUser, transformer: droppable());
   }
 
   Future<void> _onSignInWithEmail(
@@ -105,10 +109,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(AuthLoading());
-    final result = await forgotPassword(ForgotPasswordParams(email: event.email));
+    final result =
+        await forgotPassword(ForgotPasswordParams(email: event.email));
+    result.fold((failure) => emit(AuthError(message: failure.message)),
+        (_) => emit(ForgotPasswordSuccess('Password reset link sent.')));
+  }
+
+  Future<void> _onDeleteUser(
+    DeleteUserEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    final result = await deleteUser(NoParams());
     result.fold(
       (failure) => emit(AuthError(message: failure.message)),
-      (_) => emit(ForgotPasswordSuccess('Password reset link sent.'))
+      (_) => emit(Unauthenticated()),
     );
   }
 }

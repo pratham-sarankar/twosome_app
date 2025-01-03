@@ -14,4 +14,6 @@ abstract class AuthRepository {
   Future<Either<Failure, User>> getCurrentUser();
 
   Future<Either<Failure, void>> forgotPassword(String email);
+
+  Future<Either<Failure, void>> deleteUser();
 }

@@ -9,6 +9,7 @@ import 'package:twosome_app/features/auth/presentation/screens/login_screen.dart
 import 'package:twosome_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:twosome_app/features/contacts/presentation/screens/contacts_screen.dart';
 import 'package:twosome_app/features/home/presentation/screens/home_screen.dart';
+import 'package:twosome_app/features/profile/presentation/screens/account_screen.dart';
 import 'package:twosome_app/features/profile/presentation/screens/profile_screen.dart';
 import 'package:twosome_app/features/spaces/presentation/screens/discover_screen.dart';
 
@@ -41,7 +42,12 @@ class AppRouter {
 
       // Authenticated Routes (ShellRoute for Tabs)
       ShellRoute(
-        builder: (context, state, child) => HomeScreen(child: child),
+        builder: (context, state, child) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => sl<AuthBloc>()),
+          ],
+          child: HomeScreen(child: child),
+        ),
         routes: [
           GoRoute(
             path: Routes.discover,
@@ -53,12 +59,13 @@ class AppRouter {
           ),
           GoRoute(
             path: Routes.profile,
-            builder: (context, state) => MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (context) => sl<AuthBloc>()),
-              ],
-              child: ProfileScreen(),
-            ),
+            builder: (context, state) => ProfileScreen(),
+            routes: [
+              GoRoute(
+                path: 'account',
+                builder: (context, state) => AccountScreen(),
+              ),
+            ],
           ),
         ],
       ),

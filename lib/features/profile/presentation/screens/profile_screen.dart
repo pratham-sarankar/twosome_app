@@ -79,7 +79,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: [
                   ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.push(Routes.account);
+                    },
                     title: Text("Account"),
                     subtitle: Text("developer.pratham@gmail.com"),
                     horizontalTitleGap: 10,

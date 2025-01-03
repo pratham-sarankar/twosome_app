@@ -30,7 +30,7 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       final user = userCredential.user;
       if (user != null) {
-        return Right(UserModel(id: user.uid, email: user.email ?? ''));
+        return Right(UserModel.fromFirebaseUser(user));
       } else {
         return Left(AuthFailure('User not found'));
       }
@@ -52,7 +52,7 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       final user = userCredential.user;
       if (user != null) {
-        return Right(UserModel(id: user.uid, email: user.email ?? ''));
+        return Right(UserModel.fromFirebaseUser(user));
       } else {
         return Left(AuthFailure('User not found'));
       }
@@ -83,7 +83,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = userCredential.user;
 
       if (user != null) {
-        return Right(UserModel(id: user.uid, email: user.email ?? ''));
+        return Right(UserModel.fromFirebaseUser(user));
       } else {
         return Left(AuthFailure('User not found'));
       }
@@ -112,7 +112,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final user = firebaseAuth.currentUser;
       if (user != null) {
-        return Right(UserModel(id: user.uid, email: user.email ?? ''));
+        return Right(UserModel.fromFirebaseUser(user));
       } else {
         return Left(AuthFailure('No user currently signed in'));
       }
@@ -139,6 +139,21 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(AuthFailure(e.message ?? 'Authentication error'));
     } catch (e) {
       return Left(e is Failure ? e : ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteUser() async {
+    auth.User? user = firebaseAuth.currentUser;
+    if (user != null) {
+      try {
+        await user.delete();
+        return const Right(null);
+      } on auth.FirebaseAuthException catch (e) {
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
+      }
+    } else {
+      return Left(AuthFailure('No user currently signed in'));
     }
   }
 }
