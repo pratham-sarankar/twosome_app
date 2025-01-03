@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +33,9 @@ class _SignupScreenState extends State<SignupScreen> {
     return AuthScaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          print("Auth State: $state");
+          if (kDebugMode) {
+            print("Auth State: $state");
+          }
           if (state is AuthError) {
             SnackBarHelper.showError(context, state.message);
           }

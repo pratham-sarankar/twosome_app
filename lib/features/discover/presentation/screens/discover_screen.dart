@@ -52,7 +52,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         ),
         childAspectRatio: 9 / 11,
         children: [
-          for (int i = 0; i < 10; i++)
+          for (int i = 0; i < 1; i++)
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),

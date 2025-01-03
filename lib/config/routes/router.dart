@@ -8,10 +8,10 @@ import 'package:twosome_app/features/auth/presentation/screens/forgot_password_s
 import 'package:twosome_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:twosome_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:twosome_app/features/contacts/presentation/screens/contacts_screen.dart';
+import 'package:twosome_app/features/discover/presentation/screens/discover_screen.dart';
 import 'package:twosome_app/features/home/presentation/screens/home_screen.dart';
 import 'package:twosome_app/features/profile/presentation/screens/account_screen.dart';
 import 'package:twosome_app/features/profile/presentation/screens/profile_screen.dart';
-import 'package:twosome_app/features/spaces/presentation/screens/discover_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(

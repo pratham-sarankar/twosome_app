@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:twosome_app/config/routes/routes.dart';
 import 'package:twosome_app/core/presentation/widgets/snackbar_helper.dart';
 import 'package:twosome_app/features/auth/presentation/bloc/auth_bloc.dart';
@@ -20,6 +19,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
+  void initState() {
+    super.initState();
+    context.read<AuthBloc>().add(GetCurrentUserEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
       if (state is AuthError) {
@@ -29,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context.go(Routes.login);
       }
     }, builder: (context, state) {
+      final email = state is Authenticated ? state.user.email : "";
       return Scaffold(
         appBar: AppBar(
           title: Text("Me"),
@@ -62,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context.push(Routes.account);
                     },
                     title: Text("Account"),
-                    subtitle: Text("developer.pratham@gmail.com"),
+                    subtitle: Text(email),
                     horizontalTitleGap: 10,
                     trailing: Icon(Icons.arrow_forward_ios, size: 15),
                   ),

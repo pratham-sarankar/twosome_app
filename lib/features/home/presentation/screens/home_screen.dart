@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconly/iconly.dart';
 import 'package:twosome_app/config/routes/routes.dart';
 
 class HomeScreen extends StatefulWidget {
