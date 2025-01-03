@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconly/iconly.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:twosome_app/config/routes/routes.dart';
 import 'package:twosome_app/core/presentation/widgets/snackbar_helper.dart';
-import 'package:twosome_app/features/auth/domain/use_cases/sign_out.dart';
 import 'package:twosome_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:twosome_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:twosome_app/features/auth/presentation/bloc/auth_state.dart';
 import 'package:twosome_app/features/profile/presentation/widgets/signout_confirmation_dialog.dart';
+import 'package:twosome_app/features/profile/presentation/widgets/version_text.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -58,27 +58,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: [
                   ListTile(
-                    onTap: () {},
-                    title: Text("You"),
-                    leading: Icon(IconlyLight.profile),
-                    horizontalTitleGap: 10,
-                    trailing: Icon(Icons.arrow_forward_ios, size: 15),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            Card(
-              elevation: 0,
-              margin: EdgeInsets.only(top: 10),
-              color: Theme.of(context)
-                  .colorScheme
-                  .secondaryContainer
-                  .withAlpha(150),
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                children: [
-                  ListTile(
                     onTap: () {
                       context.push(Routes.account);
                     },
@@ -89,11 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const Divider(height: 0, thickness: 1),
                   ListTile(
-                    onTap: () {},
                     title: Text("About"),
-                    subtitle: Text("V2.5.4"),
+                    subtitle: VersionText(),
                     horizontalTitleGap: 10,
-                    trailing: Icon(Icons.arrow_forward_ios, size: 15),
                   ),
                   const Divider(height: 0, thickness: 1),
                   ListTile(
