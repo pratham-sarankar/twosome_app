@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twosome_app/config/routes/routes.dart';
 import 'package:twosome_app/core/presentation/widgets/snackbar_helper.dart';
+import 'package:twosome_app/features/auth/domain/entities/user.dart';
 import 'package:twosome_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:twosome_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:twosome_app/features/auth/presentation/bloc/auth_state.dart';
+import 'package:twosome_app/features/profile/presentation/widgets/deletion_confirmation_dialog.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -17,6 +19,8 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  User? user;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +37,9 @@ class _AccountScreenState extends State<AccountScreen> {
       listener: (context, state) {
         if (kDebugMode) {
           print("Auth State: $state");
+        }
+        if (state is Authenticated) {
+          user = state.user;
         }
         if (state is AuthError) {
           SnackBarHelper.showError(context, state.message);
@@ -51,13 +58,13 @@ class _AccountScreenState extends State<AccountScreen> {
             children: [
               Column(
                 children: [
-                  if (state is Authenticated)
+                  if (user != null)
                     Column(
                       children: [
                         ListTile(
                           leading: Icon(CupertinoIcons.mail),
                           title: Text('Email'),
-                          subtitle: Text(state.user.email),
+                          subtitle: Text(user!.email),
                         ),
                         Divider(
                           height: 1,
@@ -75,8 +82,14 @@ class _AccountScreenState extends State<AccountScreen> {
                         borderRadius: BorderRadius.circular(0),
                       ),
                     ),
-                    onPressed: () {
-                      context.read<AuthBloc>().add(DeleteUserEvent());
+                    onPressed: () async {
+                      final result = await showDialog(
+                        context: context,
+                        builder: (context) => DeletionConfirmationDialog(),
+                      );
+                      if (context.mounted && result == true) {
+                        context.read<AuthBloc>().add(DeleteUserEvent());
+                      }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
