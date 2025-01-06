@@ -16,12 +16,11 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
 
   @override
   Widget build(BuildContext context) {
-    final scaffoldBgColor = Theme.of(context).scaffoldBackgroundColor;
     return TextFormField(
       keyboardType: TextInputType.visiblePassword,
       style: GoogleFonts.poppins(
         fontWeight: FontWeight.w500,
-        color: scaffoldBgColor,
+        color: Theme.of(context).colorScheme.primary,
       ),
       onSaved: widget.onSaved,
       validator: (value) {
@@ -36,10 +35,12 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       decoration: InputDecoration(
         hintText: "Password",
         hintStyle: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500, color: scaffoldBgColor),
+          fontWeight: FontWeight.w500,
+          color: Theme.of(context).colorScheme.primary,
+        ),
         prefixIcon: Icon(
           CupertinoIcons.lock,
-          color: scaffoldBgColor,
+          color: Theme.of(context).colorScheme.primary,
         ),
         suffixIcon: GestureDetector(
           onTap: () {
@@ -49,7 +50,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
           },
           child: Icon(
             _isObscure ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
-            color: scaffoldBgColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         suffixIconConstraints: BoxConstraints(minWidth: 60),
@@ -57,21 +58,14 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-            color: Colors.white,
-            width: 2,
-          ),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(
-            color: Colors.white38,
+            color: Theme.of(context).colorScheme.primary,
             width: 2,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary,
             width: 2,
           ),
         ),
@@ -79,21 +73,21 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
           color: Colors.redAccent,
           fontWeight: FontWeight.w500,
         ),
-        errorBorder: OutlineInputBorder(
+        focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-            color: Colors.white70,
-            width: 1,
-          ),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary.withAlpha(150),
             width: 2,
           ),
         ),
-        fillColor: scaffoldBgColor.withAlpha(45),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.primary.withAlpha(150),
+            width: 1,
+          ),
+        ),
+        fillColor: Theme.of(context).colorScheme.primary.withAlpha(30),
         filled: true,
       ),
     );

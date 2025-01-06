@@ -7,17 +7,16 @@ class EmailFormField extends StatelessWidget {
   final FormFieldSetter<String>? onSaved;
   @override
   Widget build(BuildContext context) {
-    final scaffoldBgColor = Theme.of(context).scaffoldBackgroundColor;
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
       style: GoogleFonts.poppins(
         fontWeight: FontWeight.w500,
-        color: scaffoldBgColor,
+        color: Theme.of(context).colorScheme.primary,
       ),
       onSaved: onSaved,
       validator: (value) {
-        final emailRegex = RegExp(
-            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+        final emailRegex =
+            RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
         if (value == null || value.isEmpty) {
           return 'Please enter your email';
         } else if (!emailRegex.hasMatch(value)) {
@@ -29,25 +28,24 @@ class EmailFormField extends StatelessWidget {
         hintText: "Email",
         hintStyle: GoogleFonts.poppins(
           fontWeight: FontWeight.w500,
-          color: scaffoldBgColor,
+          color: Theme.of(context).colorScheme.primary,
         ),
         prefixIcon: Icon(
           CupertinoIcons.mail,
-          color: scaffoldBgColor,
+          color: Theme.of(context).colorScheme.primary,
         ),
-        prefixIconConstraints:
-        BoxConstraints(minWidth: 60),
+        prefixIconConstraints: BoxConstraints(minWidth: 60),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary,
             width: 2,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primary,
             width: 2,
           ),
         ),
@@ -58,18 +56,18 @@ class EmailFormField extends StatelessWidget {
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-            color: Colors.white38,
+            color: Theme.of(context).colorScheme.primary.withAlpha(150),
             width: 2,
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
-            color: Colors.white70,
+            color: Theme.of(context).colorScheme.primary.withAlpha(150),
             width: 1,
           ),
         ),
-        fillColor: scaffoldBgColor.withAlpha(45),
+        fillColor: Theme.of(context).colorScheme.primary.withAlpha(30),
         filled: true,
       ),
     );

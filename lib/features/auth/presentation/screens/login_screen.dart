@@ -83,9 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Text(
                                   "Forgot Password?",
                                   style: GoogleFonts.poppins(
-                                    color: scaffoldBgColor,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: TextDecoration.underline,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
@@ -168,9 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Text(
                                     "Sign up",
                                     style: GoogleFonts.poppins(
-                                      color: primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                      decoration: TextDecoration.underline,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                 ),
