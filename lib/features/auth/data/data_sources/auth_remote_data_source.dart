@@ -3,16 +3,23 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthRemoteDataSource {
   Future<User?> signInWithEmail(String email, String password);
+
   Future<User?> signUpWithEmail(String email, String password);
+
   Future<User?> signInWithGoogle();
+
   Future<void> signOut();
+
+  Future<void> sendPasswordResetEmail(String email);
+
+  User? getCurrentUser();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
 
-  AuthRemoteDataSourceImpl({required this.firebaseAuth, required this.googleSignIn});
+  AuthRemoteDataSourceImpl(this.firebaseAuth, this.googleSignIn);
 
   @override
   Future<User?> signInWithEmail(String email, String password) async {
@@ -50,5 +57,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<void> signOut() async {
     await googleSignIn.signOut();
     await firebaseAuth.signOut();
+  }
+
+  @override
+  User? getCurrentUser() => firebaseAuth.currentUser;
+
+  @override
+  Future<void> sendPasswordResetEmail(String email) {
+    return firebaseAuth.sendPasswordResetEmail(email: email);
   }
 }

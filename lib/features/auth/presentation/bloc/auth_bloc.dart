@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twosome_app/core/usecases/usecase.dart';
 import 'package:twosome_app/features/auth/domain/use_cases/delete_user.dart';
 import 'package:twosome_app/features/auth/domain/use_cases/forgot_password.dart';
+
+import '../../domain/use_cases/get_current_user.dart';
 import '../../domain/use_cases/sign_in_with_email.dart';
-import '../../domain/use_cases/sign_up_with_email.dart';
 import '../../domain/use_cases/sign_in_with_google.dart';
 import '../../domain/use_cases/sign_out.dart';
-import '../../domain/use_cases/get_current_user.dart';
+import '../../domain/use_cases/sign_up_with_email.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
@@ -20,15 +21,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final ForgotPassword forgotPassword;
   final DeleteUser deleteUser;
 
-  AuthBloc({
-    required this.signInWithEmail,
-    required this.signUpWithEmail,
-    required this.signInWithGoogle,
-    required this.signOut,
-    required this.getCurrentUser,
-    required this.forgotPassword,
-    required this.deleteUser,
-  }) : super(AuthInitial()) {
+  AuthBloc(
+    this.signInWithEmail,
+    this.signUpWithEmail,
+    this.signInWithGoogle,
+    this.signOut,
+    this.getCurrentUser,
+    this.forgotPassword,
+    this.deleteUser,
+  ) : super(AuthInitial()) {
     on<SignInWithEmailEvent>(_onSignInWithEmail, transformer: droppable());
     on<SignUpWithEmailEvent>(_onSignUpWithEmail, transformer: droppable());
     on<SignInWithGoogleEvent>(_onSignInWithGoogle, transformer: droppable());

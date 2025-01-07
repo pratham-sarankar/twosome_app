@@ -1,34 +1,28 @@
 import 'package:dartz/dartz.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:twosome_app/core/errors/failures.dart';
 import 'package:twosome_app/core/network/network_info.dart';
+import 'package:twosome_app/features/auth/data/data_sources/auth_remote_data_source.dart';
 
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../models/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class AuthRepositoryImpl implements AuthRepository {
   final NetworkInfo networkInfo;
-  final auth.FirebaseAuth firebaseAuth;
-  final GoogleSignIn googleSignIn;
+  final AuthRemoteDataSource remoteDataSource;
 
   AuthRepositoryImpl(
-    this.networkInfo, {
-    required this.firebaseAuth,
-    required this.googleSignIn,
-  });
+    this.networkInfo,
+    this.remoteDataSource,
+  );
 
   @override
   Future<Either<Failure, User>> signInWithEmail(
       String email, String password) async {
     try {
       await _checkConnection();
-      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      final user = userCredential.user;
+      final user = await remoteDataSource.signInWithEmail(email, password);
       if (user != null) {
         return Right(UserModel.fromFirebaseUser(user));
       } else {
@@ -46,11 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
       String email, String password) async {
     try {
       await _checkConnection();
-      final userCredential = await firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      final user = userCredential.user;
+      final user = await remoteDataSource.signUpWithEmail(email, password);
       if (user != null) {
         return Right(UserModel.fromFirebaseUser(user));
       } else {
@@ -67,21 +57,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, User>> signInWithGoogle() async {
     try {
       await _checkConnection();
-      final googleUser = await googleSignIn.signIn();
-      if (googleUser == null) {
-        return Left(AuthFailure('Google sign-in aborted'));
-      }
-
-      final googleAuth = await googleUser.authentication;
-      final credential = auth.GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      final userCredential =
-          await firebaseAuth.signInWithCredential(credential);
-      final user = userCredential.user;
-
+      final user = await remoteDataSource.signInWithGoogle();
       if (user != null) {
         return Right(UserModel.fromFirebaseUser(user));
       } else {
@@ -97,20 +73,18 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, void>> signOut() async {
     try {
-      await Future.wait([
-        firebaseAuth.signOut(),
-        googleSignIn.signOut(),
-      ]);
+      await remoteDataSource.signOut();
       return const Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
+  //TODO: Remote Future from this function
   @override
-  Future<Either<Failure, User>> getCurrentUser() async {
+  Either<Failure, User> getCurrentUser() {
     try {
-      final user = firebaseAuth.currentUser;
+      final user = remoteDataSource.getCurrentUser();
       if (user != null) {
         return Right(UserModel.fromFirebaseUser(user));
       } else {
@@ -118,6 +92,34 @@ class AuthRepositoryImpl implements AuthRepository {
       }
     } catch (e) {
       return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> forgotPassword(String email) async {
+    try {
+      await _checkConnection();
+      return Right(await remoteDataSource.sendPasswordResetEmail(email));
+    } on auth.FirebaseAuthException catch (e) {
+      return Left(AuthFailure(e.message ?? 'Authentication error'));
+    } catch (e) {
+      return Left(e is Failure ? e : ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteUser() async {
+    _checkConnection();
+    auth.User? user = remoteDataSource.getCurrentUser();
+    if (user != null) {
+      try {
+        await user.delete();
+        return const Right(null);
+      } on auth.FirebaseAuthException catch (e) {
+        return Left(AuthFailure(e.message ?? 'Authentication error'));
+      }
+    } else {
+      return Left(AuthFailure('No user currently signed in'));
     }
   }
 
@@ -129,31 +131,5 @@ class AuthRepositoryImpl implements AuthRepository {
       throw NetworkFailure("No internet connection");
     }
     return true;
-  }
-
-  @override
-  Future<Either<Failure, void>> forgotPassword(String email) async {
-    try {
-      return Right(await firebaseAuth.sendPasswordResetEmail(email: email));
-    } on auth.FirebaseAuthException catch (e) {
-      return Left(AuthFailure(e.message ?? 'Authentication error'));
-    } catch (e) {
-      return Left(e is Failure ? e : ServerFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> deleteUser() async {
-    auth.User? user = firebaseAuth.currentUser;
-    if (user != null) {
-      try {
-        await user.delete();
-        return const Right(null);
-      } on auth.FirebaseAuthException catch (e) {
-        return Left(AuthFailure(e.message ?? 'Authentication error'));
-      }
-    } else {
-      return Left(AuthFailure('No user currently signed in'));
-    }
   }
 }
