@@ -7,8 +7,10 @@ import 'package:twosome_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:twosome_app/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:twosome_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:twosome_app/features/auth/presentation/screens/signup_screen.dart';
+import 'package:twosome_app/features/chat/presentation/screens/chat_screen.dart';
 import 'package:twosome_app/features/contacts/presentation/screens/contacts_screen.dart';
-import 'package:twosome_app/features/discover/presentation/screens/discover_screen.dart';
+import 'package:twosome_app/features/dots/presentation/bloc/dots_bloc.dart';
+import 'package:twosome_app/features/dots/presentation/screens/dots_screen.dart';
 import 'package:twosome_app/features/home/presentation/screens/home_screen.dart';
 import 'package:twosome_app/features/profile/presentation/screens/account_screen.dart';
 import 'package:twosome_app/features/profile/presentation/screens/profile_screen.dart';
@@ -50,8 +52,11 @@ class AppRouter {
         ),
         routes: [
           GoRoute(
-            path: Routes.discover,
-            builder: (context, state) => DiscoverScreen(),
+            path: Routes.home,
+            builder: (context, state) => BlocProvider<DotsBloc>(
+              create: (context) => sl<DotsBloc>(),
+              child: DotsScreen(),
+            ),
           ),
           GoRoute(
             path: Routes.contacts,
@@ -69,6 +74,11 @@ class AppRouter {
           ),
         ],
       ),
+
+      GoRoute(
+        path: Routes.chat,
+        builder: (context, state) => ChatScreen(),
+      ),
     ],
 
     // Redirection Logic
@@ -81,14 +91,9 @@ class AppRouter {
         return Routes.login;
       }
 
-      // If authenticated and trying to go to login, redirect to /home/discover
+      // If authenticated and trying to go to login, redirect to Routes.home
       if (isAuthenticated && isLoggingIn) {
-        return Routes.discover;
-      }
-
-      // If going to Routes.home, redirect to Routes.discover
-      if (state.uri.path == Routes.home) {
-        return Routes.discover;
+        return Routes.home;
       }
 
       // If going to Routes.auth, redirect to Routes.login
