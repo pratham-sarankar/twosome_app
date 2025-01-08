@@ -9,6 +9,7 @@ import 'package:twosome_app/features/auth/presentation/screens/login_screen.dart
 import 'package:twosome_app/features/auth/presentation/screens/signup_screen.dart';
 import 'package:twosome_app/features/chat/presentation/screens/chat_screen.dart';
 import 'package:twosome_app/features/contacts/presentation/screens/contacts_screen.dart';
+import 'package:twosome_app/features/dots/domain/entities/dot.dart';
 import 'package:twosome_app/features/dots/presentation/bloc/dots_bloc.dart';
 import 'package:twosome_app/features/dots/presentation/screens/dots_screen.dart';
 import 'package:twosome_app/features/home/presentation/screens/home_screen.dart';
@@ -77,7 +78,9 @@ class AppRouter {
 
       GoRoute(
         path: Routes.chat,
-        builder: (context, state) => ChatScreen(),
+        builder: (context, state) => ChatScreen(
+          dot: state.extra as Dot,
+        ),
       ),
     ],
 
