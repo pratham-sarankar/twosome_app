@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:twosome_app/core/errors/failures.dart';
 import 'package:twosome_app/features/dots/data/models/dot_model.dart';
 import 'package:twosome_app/features/dots/domain/entities/dot.dart';
 
@@ -17,7 +18,7 @@ class DotRemoteDataSourceImpl implements DotRemoteDataSource {
       final snapshot = await firestore.collection('dots').get();
       return snapshot.docs.map((doc) => DotModel.fromSnapshot(doc)).toList();
     } catch (e) {
-      throw Exception('Failed to fetch dots');
+      throw ServerFailure('Failed to fetch dots');
     }
   }
 }

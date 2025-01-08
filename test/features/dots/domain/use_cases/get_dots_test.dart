@@ -53,10 +53,11 @@ void main() {
         },
       );
       test(
-        'should return failure when repository throws an error',
+        'should return failure when repository returns a Left',
         () async {
           // arrange
-          when(mockDotRepository.getDots()).thenThrow(ServerFailure(''));
+          when(mockDotRepository.getDots())
+              .thenAnswer((_) async => Left(ServerFailure('')));
           // act
           final result = await usecase(NoParams());
           // assert
@@ -69,11 +70,13 @@ void main() {
         'should return an empty list if repository has no dots',
         () async {
           // arrange
-          when(mockDotRepository.getDots()).thenAnswer((_) async => Right([]));
+          final emptyList = <Dot>[];
+          when(mockDotRepository.getDots())
+              .thenAnswer((_) async => Right(emptyList));
           // act
           final result = await usecase(NoParams());
           // assert
-          expect(result, Right([]));
+          expect(result, Right(emptyList));
           verify(mockDotRepository.getDots());
           verifyNoMoreInteractions(mockDotRepository);
         },
