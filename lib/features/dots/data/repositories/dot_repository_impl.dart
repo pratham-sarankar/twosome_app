@@ -18,7 +18,7 @@ class DotRepositoryImpl implements DotRepository {
       final dotModels = await remoteDataSource.getDots();
       return Right(dotModels);
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(e is Failure ? e : ServerFailure(e.toString()));
     }
   }
 

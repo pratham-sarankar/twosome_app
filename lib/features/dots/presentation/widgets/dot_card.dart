@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconly/iconly.dart';
+import 'package:twosome_app/features/dots/domain/entities/dot.dart';
 
 class DotCard extends StatelessWidget {
-  const DotCard({super.key, required this.onPressed});
+  const DotCard({super.key, required this.dot, required this.onPressed});
 
+  final Dot dot;
   final VoidCallback onPressed;
 
   @override
@@ -17,9 +19,9 @@ class DotCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
-              image: NetworkImage(
-                  'https://play-lh.googleusercontent.com/7Ak4Ye7wNUtheIvSKnVgGL_OIZWjGPZNV6TP_3XLxHC-sDHLSE45aDg41dFNmL5COA'),
-              fit: BoxFit.cover),
+            image: NetworkImage(dot.imageUrl),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Stack(
           children: [
@@ -62,10 +64,7 @@ class DotCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Image.network(
-                          'https://play-lh.googleusercontent.com/7Ak4Ye7wNUtheIvSKnVgGL_OIZWjGPZNV6TP_3XLxHC-sDHLSE45aDg41dFNmL5COA',
-                          fit: BoxFit.cover,
-                        ),
+                        Image.network(dot.imageUrl, fit: BoxFit.cover),
                       ],
                     ),
                   ),
@@ -80,7 +79,7 @@ class DotCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Hazel",
+                    dot.name,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 18,
@@ -97,7 +96,7 @@ class DotCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        "Musician",
+                        dot.profession,
                         style: GoogleFonts.poppins(
                           color: Colors.white70,
                           fontSize: 15,

@@ -80,7 +80,6 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  //TODO: Remote Future from this function
   @override
   Either<Failure, User> getCurrentUser() {
     try {

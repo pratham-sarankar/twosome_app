@@ -10,6 +10,7 @@ void main() {
         () {
           const dot = Dot(
             id: '1',
+            name: 'John Doe',
             profession: 'Software Engineer',
             personality: 'Kind and Caring',
             imageUrl: 'https://www.example.com/image.jpg',
@@ -26,12 +27,14 @@ void main() {
         () {
           const dot1 = Dot(
             id: '1',
+            name: 'John Doe',
             profession: 'Software Engineer',
             personality: 'Kind and Caring',
             imageUrl: 'https://www.example.com/image.jpg',
           );
           const dot2 = Dot(
             id: '1',
+            name: 'John Doe',
             profession: 'Software Engineer',
             personality: 'Kind and Caring',
             imageUrl: 'https://www.example.com/image.jpg',

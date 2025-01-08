@@ -23,12 +23,14 @@ void main() {
   final tDots = [
     const Dot(
       id: '1',
+      name: 'John Doe',
       profession: 'Software Engineer',
       personality: 'Kind and Caring',
       imageUrl: 'https://www.example.com/image.jpg',
     ),
     const Dot(
       id: '2',
+      name: 'Jane Doe',
       profession: 'Doctor',
       personality: 'Smart and Intelligent',
       imageUrl: 'https://www.example.com/image.jpg',

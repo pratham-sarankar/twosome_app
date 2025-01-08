@@ -74,10 +74,14 @@ class _DotsScreenState extends State<DotsScreen> {
           ),
           childAspectRatio: 9 / 11,
           children: [
-            for (int i = 0; i < 10; i++)
+            for (final dot in state.dots)
               DotCard(
+                dot: dot,
                 onPressed: () {
-                  context.push(Routes.chat);
+                  context.push(
+                    Routes.chat,
+                    extra: dot,
+                  );
                 },
               ),
           ],
