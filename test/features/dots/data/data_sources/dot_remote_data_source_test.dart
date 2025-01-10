@@ -8,10 +8,12 @@ import 'package:twosome_app/features/dots/data/models/dot_model.dart';
 
 import 'dot_remote_data_source_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<FirebaseFirestore>()])
-@GenerateNiceMocks([MockSpec<CollectionReference>()])
-@GenerateNiceMocks([MockSpec<QuerySnapshot>()])
-@GenerateNiceMocks([MockSpec<QueryDocumentSnapshot>()])
+@GenerateNiceMocks([
+  MockSpec<FirebaseFirestore>(),
+  MockSpec<CollectionReference>(),
+  MockSpec<QuerySnapshot>(),
+  MockSpec<QueryDocumentSnapshot>()
+])
 void main() {
   late MockFirebaseFirestore mockFirebaseFirestore;
   late MockCollectionReference<Map<String, dynamic>> mockCollectionReference;
@@ -50,12 +52,14 @@ void main() {
   ];
   // MockQueryDocumentSnapshotData1
   final mockQDSData1 = {
+    'name': 'John Doe',
     'profession': 'Software Engineer',
     'personality': 'Kind and Caring',
     'imageUrl': 'https://www.example.com/image.jpg',
   };
   // MockQueryDocumentSnapshotData2
   final mockQDSData2 = {
+    'name': 'Jane Doe',
     'profession': 'Doctor',
     'personality': 'Smart and Intelligent',
     'imageUrl': 'https://www.example.com/image.jpg',
