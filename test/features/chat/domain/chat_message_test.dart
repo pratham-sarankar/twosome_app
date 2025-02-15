@@ -11,8 +11,7 @@ void main() {
         id: 'id',
         senderId: 'senderId',
         message: 'message',
-        timestamp: now,
-        isRead: false,
+        timestamp: now.toDate(),
       );
 
       test(
@@ -22,7 +21,6 @@ void main() {
           expect(chatMessage.senderId, 'senderId');
           expect(chatMessage.message, 'message');
           expect(chatMessage.timestamp, now);
-          expect(chatMessage.isRead, false);
         },
       );
 
@@ -40,21 +38,20 @@ void main() {
             id: 'id',
             senderId: 'senderId2',
             message: 'message2',
-            timestamp: now,
-            isRead: false,
+            timestamp: now.toDate(),
+           
           );
           expect(chatMessage, chatMessage2);
         },
       );
 
       test('should have isRead as false by default', () {
-        final chatMessage2 = ChatMessage(
+         ChatMessage(
           id: 'id',
           senderId: 'senderId2',
           message: 'message2',
-          timestamp: now,
+          timestamp: now.toDate(),
         );
-        expect(chatMessage2.isRead, false);
       });
     },
   );

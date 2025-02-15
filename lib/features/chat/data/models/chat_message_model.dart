@@ -7,7 +7,6 @@ class ChatMessageModel extends ChatMessage {
     required super.senderId,
     required super.message,
     required super.timestamp,
-    super.isRead,
   });
 
   factory ChatMessageModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -15,8 +14,7 @@ class ChatMessageModel extends ChatMessage {
       id: snapshot.id,
       senderId: snapshot['senderId'],
       message: snapshot['message'],
-      timestamp: snapshot['timestamp'],
-      isRead: snapshot['isRead'] ?? false,
+      timestamp: (snapshot['timestamp'] as Timestamp).toDate(),
     );
   }
 }

@@ -18,7 +18,6 @@ abstract class AuthRemoteDataSource {
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
-
   AuthRemoteDataSourceImpl(this.firebaseAuth, this.googleSignIn);
 
   @override
