@@ -25,11 +25,11 @@ class GetMessages implements UseCase<List<ChatMessage>, GetMessageParams> {
 class GetMessageParams {
   final String conversationId;
   final int limit;
-  final ChatMessage startAfter;
+  final ChatMessage? startAfter;
 
   GetMessageParams({
     required this.conversationId,
-    required this.limit,
-    required this.startAfter,
+    this.limit = 20,
+    this.startAfter,
   });
 }

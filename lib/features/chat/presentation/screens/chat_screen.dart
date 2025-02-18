@@ -17,6 +17,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+      ),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(IconlyLight.arrow_left),
